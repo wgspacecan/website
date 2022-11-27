@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html>
 <head>
     <link rel="stylesheet" href="main.css">
@@ -17,10 +16,10 @@
     
     <?php
     if($pass) {
-        echo "<a href='info.php'>Info</a>
-                <a href='logout.php'>Logout</a>";
+        echo "<a href='info.php'>Info</a>";
+        echo "<a href='user_logout.php'>Logout</a>";
     } else {
-        echo "<a href='login.php'>Login</a>";
+        echo "<a href='user_login.php'>Login</a>";
     }
     ?>
 </div> 
@@ -29,7 +28,7 @@
 
 <?php
     if($pass) {
-        echo "Welcome " . $pass;
+        echo "Welcome " . $pass . ". Your secret for this session is " . $_COOKIE["spacepanda_login"];
     }
 ?>
 

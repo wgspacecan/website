@@ -61,7 +61,7 @@ class Users {
         $sql = $conn->prepare("UPDATE users SET CODE = ?, LASTLOGIN = NOW() WHERE USER = ?");
         $sql->bind_param("ss", $code, $user);
         $sql->execute();
-        setcookie("wg_login", $code, time() + (85400), "/"); // 86400 = 1 day
+        setcookie("spacepanda_login", $code, time() + (85400), "/"); // 86400 = 1 day
     }
 
     private function _check_code($conn, $code) {
@@ -76,24 +76,83 @@ class Users {
         } return False;
     }
 
+    private function _verify_username($user) {
+        if (strlen($user) > 4) { return True; }
+        return False;
+    }
+
+    private function _verify_password($pass) { 
+        $strict = False;
+        $check_1 = preg_match('@[A-Z]@', $pass); # uppercase
+        $check_2 = preg_match('@[a-z]@', $pass); # lowercase
+        $check_3 = preg_match('@[0-9]@', $pass); # number
+        $check_4 = preg_match('@[^\w]@', $pass); # special chars
+        $check_5 = strlen($pass) > 4; # length
+        if (!$strict and $check_2 and $check_5) { return True; }
+        if ($check_1 and $check_2 and $check_3 and $check_4 and $check_5) { return True; }
+        return False;
+    }
+
+    private function _process_login() { 
+        $fuser = $_REQUEST['usr'];
+        $fpass = $_REQUEST['pswd'];
+        $conn = $this->_connect_sql();
+            
+        $hash = $this->_check_existing_user($conn, $fuser);
+        if ($hash) {
+            if ($this->_login_verify_pass($fpass, $hash)) {
+                $this->_login($fuser, $conn);
+            } else {
+                return "incorrect password";
+            }
+        } else {
+            return "entered user does not exist";
+        }
+
+        $conn->close();
+    }
+
+    private function _process_create() {
+        $fuser = $_REQUEST['usr'];
+        $fpass = $_REQUEST['pswd'];
+        $conn = $this->_connect_sql();
+
+        if ($this->_verify_username($fuser) == False) {
+            return "invalid username";
+        }
+        if ($this->_verify_password($fpass) == False) {
+            return "invalid password";
+        }
+        # validate user and password standards TODO
+        if ($this->_check_existing_user($conn, $fuser) == False) {
+            $this->_create_new_user($conn, $fuser, $this->_create_encrypt_pass($fpass));
+            $this->_login($fuser, $conn);
+            return "user created";
+        } else {
+            return "user already exists";
+        }
+
+        $conn->close();
+    }
+
     #################################################
 
     public function logout() {
-        if(isset($_COOKIE["wg_login"])) {
-            setcookie("wg_login", $_COOKIE["wg_login"], time() - (3600), "/"); // 86400 = 1 day
+        if(isset($_COOKIE["spacepanda_login"])) {
+            setcookie("spacepanda_login", $_COOKIE["spacepanda_login"], time() - (3600), "/"); // 86400 = 1 day
             return True;
         } return False;
     }
 
-    public function display_current_users() {
+    public function display_all()) {
         $conn = $this->_connect_sql();
         $this->_list_users($conn);
         $conn->close();
     }
 
     public function verify() {
-        if(isset($_COOKIE["wg_login"])) {
-            $code = $_COOKIE["wg_login"];
+        if(isset($_COOKIE["spacepanda_login"])) {
+            $code = $_COOKIE["spacepanda_login"];
             $conn = $this->_connect_sql();
             $user = $this->_check_code($conn, $code);
             $conn->close();
@@ -102,38 +161,12 @@ class Users {
     }
 
     public function process() {
-        
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $fuser = $_REQUEST['usr'];
-            $fpass = $_REQUEST['pswd'];
-            $conn = $this->_connect_sql();
-
             if(isset($_POST['create'])) {
-                # validate user and password standards TODO
-                if ($this->_check_existing_user($conn, $fuser) == False) {
-                    $this->_create_new_user($conn, $fuser, $this->_create_encrypt_pass($fpass));
-                    $this->_login($fuser, $conn);
-                    return "user created";
-                } else {
-                    return "user already exists";
-                }
+                $this->_process_create();
+            } else if(isset($_POST['login'])) {
+                $this->_process_login();
             }
-
-            if(isset($_POST['login'])) {
-                
-                $hash = $this->_check_existing_user($conn, $fuser);
-                if ($hash) {
-                    if ($this->_login_verify_pass($fpass, $hash)) {
-                        $this->_login($fuser, $conn);
-                    } else {
-                        return "incorrect password";
-                    }
-                } else {
-                    return "entered user does not exist";
-                }
-            }
-
-            $conn->close();
         }
     }
 }

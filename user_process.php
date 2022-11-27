@@ -9,6 +9,7 @@
     include("users.php");
     $users = new Users();
     $pass = $users->verify();
+    $result = $users->process();
 ?>
 
 <div class="topnav">
@@ -16,22 +17,18 @@
     
     <?php
     if($pass) {
-        echo "<a class='active' href='info.php'>Info</a>";
+        echo "<a href='info.php'>Info</a>";
         echo "<a href='user_logout.php'>Logout</a>";
     } else {
-        echo "<a href='user_login.php'>Login</a>";
+        echo "<a class='active' href='user_login.php'>Login</a>";
     }
     ?>
-</div>
 
-<h1>Info</h1>
+</div> 
 
 <?php
 
-if ($pass) { echo $users->display_current_users();
-} else {
-    echo "ACCESS DENIED";
-}
+echo $result;
 
 ?>
 
