@@ -28,7 +28,7 @@
 
 <?php
 
-if ($pass) { echo $users->display_current_users();
+if ($pass) { echo $users->display_all();
 } else {
     echo "ACCESS DENIED";
 }

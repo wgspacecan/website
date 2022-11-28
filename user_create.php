@@ -27,13 +27,17 @@
 <h1>Create User</h1>
 <p>Enter user information</p>
 
-<form action="/login.php" method="post">
+<form action="/user_process.php" method="post">
     <label for="fname">username:</label><br>
     <input type="text" id="usr" name="usr"><br>
     <label for="pass">password:</label><br>
     <input type="password" id="pswd" name="pswd"><br><br>
     <input type="submit" name="create" value="Create"><br>
 </form>
+
+<br>
+<p>Username must be greater than three characters long</p>
+<p>Password must be greater than three characters long and include a lowercase letter</p>
 
 </body>
 </html> 

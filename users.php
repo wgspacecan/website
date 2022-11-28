@@ -77,7 +77,7 @@ class Users {
     }
 
     private function _verify_username($user) {
-        if (strlen($user) > 4) { return True; }
+        if (strlen($user) > 3) { return True; }
         return False;
     }
 
@@ -87,7 +87,7 @@ class Users {
         $check_2 = preg_match('@[a-z]@', $pass); # lowercase
         $check_3 = preg_match('@[0-9]@', $pass); # number
         $check_4 = preg_match('@[^\w]@', $pass); # special chars
-        $check_5 = strlen($pass) > 4; # length
+        $check_5 = strlen($pass) > 3; # length
         if (!$strict and $check_2 and $check_5) { return True; }
         if ($check_1 and $check_2 and $check_3 and $check_4 and $check_5) { return True; }
         return False;
@@ -102,6 +102,7 @@ class Users {
         if ($hash) {
             if ($this->_login_verify_pass($fpass, $hash)) {
                 $this->_login($fuser, $conn);
+                return "login successful";
             } else {
                 return "incorrect password";
             }
@@ -144,7 +145,7 @@ class Users {
         } return False;
     }
 
-    public function display_all()) {
+    public function display_all() {
         $conn = $this->_connect_sql();
         $this->_list_users($conn);
         $conn->close();
@@ -161,13 +162,15 @@ class Users {
     }
 
     public function process() {
+        $return = "No method found";
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if(isset($_POST['create'])) {
-                $this->_process_create();
+                $return = $this->_process_create();
             } else if(isset($_POST['login'])) {
-                $this->_process_login();
+                $return = $this->_process_login();
             }
         }
+        return $return;
     }
 }
 

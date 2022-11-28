@@ -27,7 +27,7 @@
 
 </div> 
 
-<h1>Logged Out</h1>
+<p>Logged Out</p>
 
 </body>
 </html> 
