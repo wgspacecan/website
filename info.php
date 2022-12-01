@@ -32,6 +32,7 @@
 if ($pass) { echo $users->display_all();
 } else {
     echo "ACCESS DENIED";
+    exit;
 }
 
 ?>

@@ -1,5 +1,7 @@
 <?php
-class Users {
+class Users
+
+{
 
     private function _connect_sql() {
         $servername = "mysql";
