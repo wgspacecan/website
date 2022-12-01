@@ -1,3 +1,9 @@
+<?php
+    include("users.php");
+    $users = new Users();
+    $users->logout();
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,18 +11,11 @@
 </head>
 <body>
 
-<?php
-    include("users.php");
-    $users = new Users();
-    $users->logout();
-
-    $pass = $users->verify();
-?>
-
 <div class="topnav">
     <a href='index.php'>Home</a>
     
     <?php
+    $pass = $users->verify();
     if($pass) {
         echo "<a href='info.php'>Info</a>";
         echo "<a class='active' href='user_logout.php'>Logout</a>";

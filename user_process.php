@@ -1,3 +1,9 @@
+<?php
+    include("users.php");
+    $users = new Users();
+    $result = $users->process();
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,22 +11,16 @@
 </head>
 <body>
 
-<?php
-    include("users.php");
-    $users = new Users();
-    $pass = $users->verify();
-    $result = $users->process();
-?>
-
 <div class="topnav">
     <a href='index.php'>Home</a>
     
     <?php
+    $pass = $users->verify();
     if($pass) {
         echo "<a href='info.php'>Info</a>";
         echo "<a href='user_logout.php'>Logout</a>";
     } else {
-        echo "<a class='active' href='user_login.php'>Login</a>";
+        echo "<a href='user_login.php'>Login</a>";
     }
     ?>
 

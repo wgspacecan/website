@@ -2,7 +2,7 @@
 class Users {
 
     private function _connect_sql() {
-        $servername = "localhost";
+        $servername = "mysql";
         $username = "webuser";
         $password = "Tb5T9eRvC2qTODYMMF";
         $dbname = "mydb";
@@ -11,7 +11,6 @@ class Users {
 
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
-            return;
         } return $conn;
     }
 
@@ -93,47 +92,44 @@ class Users {
         return False;
     }
 
-    private function _process_login() { 
-        $fuser = $_REQUEST['usr'];
-        $fpass = $_REQUEST['pswd'];
+    private function _process_login($fuser, $fpass) { 
         $conn = $this->_connect_sql();
-            
         $hash = $this->_check_existing_user($conn, $fuser);
         if ($hash) {
             if ($this->_login_verify_pass($fpass, $hash)) {
                 $this->_login($fuser, $conn);
+                $conn->close();
                 return "login successful";
             } else {
+                $conn->close();
                 return "incorrect password";
             }
         } else {
+            $conn->close();
             return "entered user does not exist";
         }
-
-        $conn->close();
     }
 
-    private function _process_create() {
-        $fuser = $_REQUEST['usr'];
-        $fpass = $_REQUEST['pswd'];
+    private function _process_create($fuser, $fpass) {
         $conn = $this->_connect_sql();
-
         if ($this->_verify_username($fuser) == False) {
+            $conn->close();
             return "invalid username";
         }
         if ($this->_verify_password($fpass) == False) {
+            $conn->close();
             return "invalid password";
         }
         # validate user and password standards TODO
         if ($this->_check_existing_user($conn, $fuser) == False) {
             $this->_create_new_user($conn, $fuser, $this->_create_encrypt_pass($fpass));
             $this->_login($fuser, $conn);
+            $conn->close();
             return "user created";
         } else {
+            $conn->close();
             return "user already exists";
         }
-
-        $conn->close();
     }
 
     #################################################
@@ -164,10 +160,12 @@ class Users {
     public function process() {
         $return = "No method found";
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $fuser = $_REQUEST['usr'];
+            $fpass = $_REQUEST['pswd'];
             if(isset($_POST['create'])) {
-                $return = $this->_process_create();
+                $return = $this->_process_create($fuser, $fpass);
             } else if(isset($_POST['login'])) {
-                $return = $this->_process_login();
+                $return = $this->_process_login($fuser, $fpass);
             }
         }
         return $return;
