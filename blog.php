@@ -1,6 +1,9 @@
 <?php
     include("backend_users.php");
+    include("backend_blog.php");
+
     $users = new Users();
+    $blog = new Blog();
 ?>
 
 <!DOCTYPE html>
@@ -30,6 +33,7 @@
 <?php
 
 if ($pass) { 
+    $blog->return_entry(1);
 
 } else {
     echo "ACCESS DENIED";

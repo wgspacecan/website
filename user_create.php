@@ -38,7 +38,7 @@
 
 <br>
 <p>Username must be greater than three characters long</p>
-<p>Password must be greater than three characters long and include a lowercase letter</p>
+<p>Password must also include a lowercase letter</p>
 
 </body>
 </html> 

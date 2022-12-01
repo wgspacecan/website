@@ -4,12 +4,10 @@ class Users
 {
 
     private function _connect_sql() {
-        $servername = "mysql";
-        $username = "webuser";
-        $password = "Tb5T9eRvC2qTODYMMF";
-        $dbname = "mydb";
 
-        $conn = new mysqli($servername, $username, $password, $dbname);
+        $conn = new mysqli( $_SERVER["mysqli_default_host"],
+                            $_SERVER["mysqli_default_user"],
+                            $_SERVER["mysqli_default_pw"], "mydb");
 
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
@@ -65,11 +63,11 @@ class Users
         $sql = $conn->prepare("UPDATE users SET CODE = ?, LASTLOGIN = NOW() WHERE USER = ?");
         $sql->bind_param("ss", $code, $user);
         $sql->execute();
-        setcookie("spacepanda_login", $code, time() + (85400), "/"); // 86400 = 1 day
+        setcookie("spacepanda_login", $code, time() + (86400), "/"); // 86400 = 1 day
     }
 
     private function _check_code($conn, $code) {
-        $sqlt = $conn->prepare("SELECT USER FROM users WHERE CODE = ? AND LASTLOGIN >= DATE_SUB(NOW(), INTERVAL 1 MINUTE)");
+        $sqlt = $conn->prepare("SELECT USER FROM users WHERE CODE = ? AND LASTLOGIN >= DATE_SUB(NOW(), INTERVAL 1 DAY)");
         $sqlt->bind_param("s", $code);
         $sqlt->execute();
         $result = $sqlt->get_result();
