@@ -1,3 +1,8 @@
+<?php
+    include("backend_users.php");
+    $users = new Users();
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,31 +10,31 @@
 </head>
 <body>
 
-<?php
-    include("backend_users.php");
-    $users = new Users();
-    $pass = $users->verify();
-?>
-
 <div class="topnav">
-    <a class='active' href='index.php'>Home</a>
+    <a href='index.php'>Home</a>
     
     <?php
+    $pass = $users->verify();
     if($pass) {
         echo "<a href='info.php'>Info</a>";
+        echo "<a class='active' href='blog.php'>Blog</a>";
         echo "<a href='user_logout.php'>Logout</a>";
     } else {
         echo "<a href='user_login.php'>Login</a>";
     }
     ?>
-</div> 
+</div>
 
-<h1>Home</h1>
+<h1>Info</h1>
 
 <?php
-    if($pass) {
-        echo "Welcome " . $pass . ". Your secret for this session is " . $_COOKIE["spacepanda_login"];
-    }
+
+if ($pass) { 
+
+} else {
+    echo "ACCESS DENIED";
+}
+
 ?>
 
 </body>

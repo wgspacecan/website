@@ -1,5 +1,5 @@
 <?php
-    include("users.php");
+    include("backend_users.php");
     $users = new Users();
 ?>
 
@@ -17,6 +17,7 @@
     $pass = $users->verify();
     if($pass) {
         echo "<a class='active' href='info.php'>Info</a>";
+        echo "<a href='blog.php'>Blog</a>";
         echo "<a href='user_logout.php'>Logout</a>";
     } else {
         echo "<a href='user_login.php'>Login</a>";
