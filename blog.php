@@ -1,9 +1,9 @@
 <?php
-    include("backend_users.php");
-    include("backend_blog.php");
+include("backend_users.php");
+include("backend_blog.php");
 
-    $users = new Users();
-    $blog = new Blog();
+$users = new Users();
+$blog = new Blog();
 ?>
 
 <!DOCTYPE html>

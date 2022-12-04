@@ -1,8 +1,7 @@
 <?php
-    include("backend_users.php");
-    $users = new Users();
-    $pass = $users->verify();
-    
+include("backend_users.php");
+$users = new Users();
+$pass = $users->verify();
 ?>
 
 <!DOCTYPE html>
@@ -28,11 +27,23 @@
 
 <h1>Home</h1>
 
+<script>
+</script>
+
 <?php
 
-    if($pass) {
-        echo "Welcome " . $pass . ". Your secret for this session is " . $_COOKIE["spacepanda_login"];
-    }
+#phpinfo();
+
+include("backend_wallet.php");
+
+echo "<br>";
+if($pass) {
+    echo "Welcome " . $pass . ". Your secret for this session is " . $_COOKIE["spacepanda_login"];
+}
+
+echo "<br>";
+include("seed_gen.php");
+
 ?>
 
 </body>

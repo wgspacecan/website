@@ -22,7 +22,6 @@ class Blog
 
     public function create_entry() {
 
-
     }
 
     public function return_entry($postID) {

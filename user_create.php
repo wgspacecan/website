@@ -1,6 +1,6 @@
 <?php
-    include("backend_users.php");
-    $users = new Users();
+include("backend_users.php");
+$users = new Users();
 ?>
 
 <!DOCTYPE html>

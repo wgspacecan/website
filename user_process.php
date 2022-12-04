@@ -1,7 +1,7 @@
 <?php
-    include("backend_users.php");
-    $users = new Users();
-    $result = $users->process();
+include("backend_users.php");
+$users = new Users();
+$result = $users->process();
 ?>
 
 <!DOCTYPE html>
