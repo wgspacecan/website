@@ -31,8 +31,8 @@ $users = new Users();
 
 if ($pass) { 
 
-    include("crypto/backend_wallet.php");
-    include("crypto/seed_gen.php");
+    include("backend/backend_wallet.php");
+    include("backend/seed_gen.php");
 
 } else {
     echo "ACCESS DENIED";
