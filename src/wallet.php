@@ -1,7 +1,6 @@
 <?php
 include("backend/backend_users.php");
 $users = new Users();
-$result = $users->process();
 ?>
 
 <!DOCTYPE html>
@@ -17,19 +16,28 @@ $result = $users->process();
     <?php
     $pass = $users->verify();
     if($pass) {
-        echo "<a href='info.php'>Info</a>";
+        echo "<a class='active' href='info.php'>Info</a>";
         echo "<a href='blog.php'>Blog</a>";
         echo "<a href='user_logout.php'>Logout</a>";
     } else {
         echo "<a href='user_login.php'>Login</a>";
     }
     ?>
+</div>
 
-</div> 
+<h1>Wallet</h1>
 
 <?php
 
-echo $result;
+if ($pass) { 
+
+    include("crypto/backend_wallet.php");
+    include("crypto/seed_gen.php");
+
+} else {
+    echo "ACCESS DENIED";
+    exit;
+}
 
 ?>
 

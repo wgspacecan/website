@@ -1,5 +1,5 @@
 <?php
-include("backend_users.php");
+include("backend/backend_users.php");
 $users = new Users();
 $pass = $users->verify();
 ?>
@@ -7,7 +7,7 @@ $pass = $users->verify();
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
 
@@ -18,7 +18,8 @@ $pass = $users->verify();
     if($pass) {
         echo "<a href='info.php'>Info</a>";
         echo "<a href='blog.php'>Blog</a>";
-        echo "<a href='games/slot.php'>Games - Slot</a>";
+        echo "<a href='games/slot.php'>Games</a>";
+        echo "<a href='wallet.php'>Wallet</a>";
         echo "<a href='user_logout.php'>Logout</a>";
     } else {
         echo "<a href='user_login.php'>Login</a>";
@@ -36,15 +37,12 @@ $pass = $users->verify();
 
 #phpinfo();
 
-include("backend_wallet.php");
-
 echo "<br>";
 if($pass) {
     echo "Welcome " . $pass . ". Your secret for this session is " . $_COOKIE["spacepanda_login"];
 }
 
 echo "<br>";
-include("seed_gen.php");
 
 ?>
 

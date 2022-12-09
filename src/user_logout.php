@@ -1,5 +1,5 @@
 <?php
-include("backend_users.php");
+include("backend/backend_users.php");
 $users = new Users();
 $users->logout();
 ?>
@@ -7,7 +7,7 @@ $users->logout();
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
 

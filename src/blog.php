@@ -1,6 +1,6 @@
 <?php
-include("backend_users.php");
-include("backend_blog.php");
+include("backend/backend_users.php");
+include("backend/backend_blog.php");
 
 $users = new Users();
 $blog = new Blog();
@@ -9,7 +9,7 @@ $blog = new Blog();
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
 
