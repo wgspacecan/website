@@ -24,7 +24,7 @@ $pass = $users->verify();
         echo "<a href='user_login.php'>Login</a>";
     }
     ?>
-    <a href='status.spacepanda.club'>Status</a>
+    <a href='https://status.spacepanda.club'>Status</a>
 </div> 
 
 <h1>Home</h1>
