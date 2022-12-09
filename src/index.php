@@ -18,7 +18,7 @@ $pass = $users->verify();
     if($pass) {
         echo "<a href='info.php'>Info</a>";
         echo "<a href='blog.php'>Blog</a>";
-        echo "<a href='games/slot.php'>Games - Slot</a>";
+        #echo "<a href='games/slot.php'>Games - Slot</a>";
         echo "<a href='user_logout.php'>Logout</a>";
     } else {
         echo "<a href='user_login.php'>Login</a>";
@@ -36,7 +36,7 @@ $pass = $users->verify();
 
 #phpinfo();
 
-include("backend_wallet.php");
+#include("backend_wallet.php");
 
 echo "<br>";
 if($pass) {
@@ -44,7 +44,7 @@ if($pass) {
 }
 
 echo "<br>";
-include("seed_gen.php");
+#include("seed_gen.php");
 
 ?>
 
